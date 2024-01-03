@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 0px;
+            font-weight: bold;
+        }
+        .row{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+        }
+        .left{
+            max-width: 50%;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            position: relative;
+            align-items: center;   
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            order:1;
+        }
+        
+        
+        .left span{            
+            display: flex;
+        }
+        .right{
+            max-width: 50%;
+            width: 50%;
+            display: flex;
+            height: 100%;
+            position: relative;
+            align-items: center;   
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            border-left: 2px solid black;
+            order:2;
+
+        }
+        
+        #left .val{
+            font-size: max(45vw, 30px);
+            color: darkgreen;
+        }
+         
+        #right .val{
+            color: brown;
+            font-size: max(45vw, 30px);
+        }
+
+        .right span{            
+            display: flex;
+        }      
+        #lsval{
+            color: darkgreen;
+            font-weight: bolder;
+            z-index: 100;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            max-width: 100px;
+            text-align: center;
+            font-size: 5rem;
+        }
+        #rsval{
+            color: brown;
+            font-weight: bolder;
+            z-index: 100;
+            background-color: white;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            max-width: 100px;
+            text-align: center;
+            font-size: 5rem;
+        }
+        .right .set{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            
+        }
+        .left .set{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div id="left" class="left">
+            <span id="lsval" class="set">0</span>
+            <span id="lval" class="val">0</span>
+        </div>
+        <div id="right" class="right">
+            <span id="rsval" class="set">0</span>
+            <span id="rval" class="val">0</span>
+        </div>
+
+    </div>
+    <script>
+        window.addEventListener("keydown", function(event){
+            lid = document.getElementById('lval');
+            rid = document.getElementById('rval');
+            lsid = document.getElementById('lsval');
+            rsid = document.getElementById('rsval');
+            console.log(event.key, lid, rid)
+            if(event.key === '2'){
+                lid.innerHTML = parseInt(lid.innerHTML) + 1;
+            }
+            if(event.key === '3'){
+                rid.innerHTML = parseInt(rid.innerHTML) + 1;
+            }
+            if(event.key === '1'){
+                //flip
+                let ls = lid.innerHTML;
+                let rs = lid.innerHTML;
+                lv = parseInt(lid.innerHTML);
+                rv = parseInt(rid.innerHTML);
+                if(lv > rv){
+                    lsid.innerHTML = parseInt(lsid.innerHTML) + 1;
+                    lid.innerHTML = 0;
+                    rid.innerHTML = 0;
+                }else if(lv < rv){
+                    rsid.innerHTML = parseInt(rsid.innerHTML) + 1;
+                    lid.innerHTML = 0;
+                    rid.innerHTML = 0;
+                }
+                if(document.getElementById("left").classList.contains("left")){                    
+                    document.getElementById("left").className = 'right';
+                    document.getElementById("right").className = 'left';
+                }else{
+                    document.getElementById("left").className = 'left';
+                    document.getElementById("right").className = 'right';
+                }
+            }        
+        })
+    </script>
+</body>
+</html>
