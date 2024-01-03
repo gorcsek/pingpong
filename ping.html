@@ -31,7 +31,6 @@
             order:1;
         }
         
-        
         .left span{            
             display: flex;
         }
@@ -103,6 +102,7 @@
 <body>
     <div class="row">
         <div id="left" class="left">
+            <input type="text" value="Player 1"> 
             <span id="lsval" class="set">0</span>
             <span id="lval" class="val">0</span>
         </div>
@@ -113,42 +113,75 @@
 
     </div>
     <script>
+
         window.addEventListener("keydown", function(event){
+            console.log(event.key, lid, rid)
+            if(event.key === '2'){
+                incrementValue('lval');
+            }
+            if(event.key === '3'){
+                incrementValue('rval');
+            }
+            if(event.key === '1'){
+                //flip
+                swipe();
+            }        
+        })
+        function swipe(){
             lid = document.getElementById('lval');
             rid = document.getElementById('rval');
             lsid = document.getElementById('lsval');
             rsid = document.getElementById('rsval');
-            console.log(event.key, lid, rid)
-            if(event.key === '2'){
-                lid.innerHTML = parseInt(lid.innerHTML) + 1;
+            let ls = lid.innerHTML;
+            let rs = lid.innerHTML;
+            lv = parseInt(lid.innerHTML);
+            rv = parseInt(rid.innerHTML);
+            if(lv > rv){
+                lsid.innerHTML = parseInt(lsid.innerHTML) + 1;
+                lid.innerHTML = 0;
+                rid.innerHTML = 0;
+            }else if(lv < rv){
+                rsid.innerHTML = parseInt(rsid.innerHTML) + 1;
+                lid.innerHTML = 0;
+                rid.innerHTML = 0;
             }
-            if(event.key === '3'){
-                rid.innerHTML = parseInt(rid.innerHTML) + 1;
+            if(document.getElementById("left").classList.contains("left")){                    
+                document.getElementById("left").className = 'right';
+                document.getElementById("right").className = 'left';
+            }else{
+                document.getElementById("left").className = 'left';
+                document.getElementById("right").className = 'right';
             }
-            if(event.key === '1'){
-                //flip
-                let ls = lid.innerHTML;
-                let rs = lid.innerHTML;
-                lv = parseInt(lid.innerHTML);
-                rv = parseInt(rid.innerHTML);
-                if(lv > rv){
-                    lsid.innerHTML = parseInt(lsid.innerHTML) + 1;
-                    lid.innerHTML = 0;
-                    rid.innerHTML = 0;
-                }else if(lv < rv){
-                    rsid.innerHTML = parseInt(rsid.innerHTML) + 1;
-                    lid.innerHTML = 0;
-                    rid.innerHTML = 0;
-                }
-                if(document.getElementById("left").classList.contains("left")){                    
-                    document.getElementById("left").className = 'right';
-                    document.getElementById("right").className = 'left';
-                }else{
-                    document.getElementById("left").className = 'left';
-                    document.getElementById("right").className = 'right';
-                }
-            }        
-        })
+        }
+
+        function incrementValue(id){
+            let node = document.getElementById(id);
+            node.innerHTML = parseInt(node.innerHTML) + 1;
+        }
+
+        function decrementValue(id){
+            let node = document.getElementById(id);
+            node.innerHTML = parseInt(node.innerHTML) - 1;
+        }
+        var touchStart = 0;
+        window.addEventListener("touchstart", (event) => {
+            touchStart = event;
+        });
+        window.addEventListener("touchend", (event) => {
+            console.log(touchStart.changedTouches[0],event.changedTouches[0], touchStart.changedTouches[0].screenY - event.changedTouches[0].screenY )
+            if((touchStart.changedTouches[0].screenY - event.changedTouches[0].screenY) > 100){
+                incrementValue(event.target.id);
+            }else if((touchStart.changedTouches[0].screenY - event.changedTouches[0].screenY ) < -100){
+                decrementValue(event.target.id);
+            }
+
+            if((touchStart.changedTouches[0].screenX - event.changedTouches[0].screenX) > 100){
+                swipe();
+            }else if((touchStart.changedTouches[0].screenX - event.changedTouches[0].screenX ) < -100){
+                swipe();
+            }
+        });
+
     </script>
 </body>
 </html>
